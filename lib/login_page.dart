@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -20,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setString('username', userNameController.text);
     _prefs.setString('password', passwordController.text);
+    print('Submitted');
+    print(_prefs.getString('username'));
 
   }
 
@@ -90,8 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    ElevatedButton(onPressed: (){
+                    ElevatedButton(onPressed: () async{
                       if(_formKey.currentState!.validate()) {
+                        await addData();
                         Navigator.pushReplacement(
                             context, MaterialPageRoute(builder: (context) =>
                             ProfilePage(),));
