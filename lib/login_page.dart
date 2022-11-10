@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profileapp/profile_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,8 +11,18 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  addData() async{
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('username', userNameController.text);
+    _prefs.setString('password', passwordController.text);
+
+  }
+
 
 
   final _formKey = GlobalKey<FormState>();
